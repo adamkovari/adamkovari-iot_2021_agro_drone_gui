@@ -18,14 +18,10 @@ import cv2
 # 	help="path to the image file")
 # args = vars(ap.parse_args())
 # load the image, convert it to grayscale, and blur it
-# image = cv2.imread(r"C:\Users\Adam\Desktop\kep.png")
 
 
-def image_analysis(image):
-	#print(image)
-	image.convert('RGB')
-	cv2_image = numpy.array(image)
-	image = cv2_image[:, :, ::-1].copy()
+
+def image_analyzer(image):
 	gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 	blurred = cv2.GaussianBlur(gray, (11, 11), 0)
 
@@ -66,8 +62,13 @@ def image_analysis(image):
 	cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
 	cv2.CHAIN_APPROX_SIMPLE)
 	cnts = imutils.grab_contours(cnts)
-	cnts = contours.sort_contours(cnts)[0]
+	try:
+		cnts = contours.sort_contours(cnts)[0]
+	except:
+		print("No target object detected")
+		return False
 
+	#print(cnts)
 	# loop over the contours
 	for (i, c) in enumerate(cnts):
 		# draw the bright spot on the image
@@ -79,10 +80,9 @@ def image_analysis(image):
 			cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
 
 	# show the output image
-	image = cv2.resize(image, (420,320))
+	# image = cv2.resize(image, (460,360))
 	# cv2.imshow("Image", image)
-	# cv2.waitKey(0)
-
-	return image
 	# cv2.imwrite(r"C:\Users\Adam\Desktop\kep2.png", image)
-	#
+	# cv2.waitKey(0)
+	print("Van valami")
+	return True

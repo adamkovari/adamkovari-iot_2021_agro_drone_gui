@@ -22,10 +22,7 @@ import cv2
 
 
 def image_analysis(image):
-	#print(image)
-	image.convert('RGB')
-	cv2_image = numpy.array(image)
-	image = cv2_image[:, :, ::-1].copy()
+
 	gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 	blurred = cv2.GaussianBlur(gray, (11, 11), 0)
 
@@ -64,7 +61,7 @@ def image_analysis(image):
 	# find the contours in the mask, then sort them from left to
 	# right
 	cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
-	cv2.CHAIN_APPROX_SIMPLE)
+		cv2.CHAIN_APPROX_SIMPLE)
 	cnts = imutils.grab_contours(cnts)
 	cnts = contours.sort_contours(cnts)[0]
 
@@ -79,10 +76,12 @@ def image_analysis(image):
 			cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
 
 	# show the output image
-	image = cv2.resize(image, (420,320))
-	# cv2.imshow("Image", image)
-	# cv2.waitKey(0)
+	#image = cv2.resize(image, (460,360))
+	#cv2.imshow("Image", image)
 
+	# image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+	# image = PIL.Image.fromarray(image)
+	# image.convert('RGBA')
 	return image
 	# cv2.imwrite(r"C:\Users\Adam\Desktop\kep2.png", image)
-	#
+	# cv2.waitKey(0)

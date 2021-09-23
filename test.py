@@ -1,48 +1,33 @@
 import tkinter as tk
 from tkinter import ttk
+import threading
+import PIL
 
 
-# root window
-root = tk.Tk()
-root.geometry('300x200')
-root.resizable(False, False)
-root.title('LabelFrame Demo')
+def kep_betoltes(row,col,img,image_frame,sample_image_label_list):
+    x = 150
+    y = 50
+    #print(row,col)
+    sample_image_label_list[row][col].place_forget()
+    label = ttk.Label(image_frame, image=img)
+    label.place(x=x+col*110, y=y+row*110, width=110, height=110)
+    return
 
-# label frame
-lf = ttk.LabelFrame(
-    root,
-    text='Alignment')
 
-lf.grid(column=0, row=0, padx=20, pady=20)
 
-alignment = tk.StringVar()
+def input(entry, event_obj):
+    event_obj.wait()
 
-# left radio button
-left_radio = ttk.Radiobutton(
-    lf,
-    text='Left',
-    value='left',
-    variable=alignment
-)
-left_radio.grid(column=0, row=0, ipadx=10, ipady=10)
+    return entry.get()
 
-# center radio button
-center_radio = ttk.Radiobutton(
-    lf,
-    text='Center',
-    value='center',
-    variable=alignment
-)
 
-center_radio.grid(column=1, row=0, ipadx=10, ipady=10)
-
-# right alignment radiobutton
-right_radio = ttk.Radiobutton(
-    lf,
-    text='Right',
-    value='right',
-    variable=alignment
-)
-right_radio.grid(column=2, row=0, ipadx=10, ipady=10)
-
-root.mainloop()
+def infiniti(entry, image_frame, sample_image_lable_list, event_obj):
+    while True:
+        inp = input(entry, event_obj)
+        entry.delete(0, tk.END)
+        event_obj.clear()
+        if inp == "repa":
+            sample_img = PIL.ImageTk.PhotoImage(PIL.Image.open("images/lights_01.png").resize((110, 110)))
+            kep_betoltes(1,1, sample_img, image_frame, sample_image_lable_list)
+        else:
+            print("ketto")
